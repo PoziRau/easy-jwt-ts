@@ -6,9 +6,6 @@ type JSONObject = {
   [x: string]: JSONValue
 }
 
-const removeBase64Padding = (data: string) =>
-  data.replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
-
 const sign = (
   payload: JSONObject | null = null,
   secret: crypto.BinaryLike | crypto.KeyObject | null,
@@ -38,11 +35,11 @@ const sign = (
 
   const header = { alg: algorithm, typ: 'JWT', expireDate: expiry }
 
-  const rawHeader = removeBase64Padding(Buffer.from(JSON.stringify(header)).toString('base64'))
-  const rawPayload = removeBase64Padding(Buffer.from(JSON.stringify(payload)).toString('base64'))
-  return `${rawHeader}.${rawPayload}.${removeBase64Padding(
+  const rawHeader = Buffer.from(JSON.stringify(header)).toString('base64')
+  const rawPayload = Buffer.from(JSON.stringify(payload)).toString('base64')
+  return `${rawHeader}.${rawPayload}.${
     crypto.createHmac(crypt, secret).update(`${rawHeader}.${rawPayload}`).digest('base64')
-  )}`
+  }`
 }
 
 const verify = (
@@ -88,9 +85,7 @@ const verify = (
 
   if (
     signature !==
-    removeBase64Padding(
-      crypto.createHmac(crypt, secret).update(`${rawHeader}.${rawPayload}`).digest('base64')
-    )
+    crypto.createHmac(crypt, secret).update(`${rawHeader}.${rawPayload}`).digest('base64') 
   ) {
     throw new Error(
       JSON.stringify({ name: 'TokenError', message: 'invalid token signature' }, null, 2)
