@@ -1,0 +1,26 @@
+{
+  "name": "easy-jwt-ts",
+  "version": "1.0.0",
+  "description": "Easy JWT Typescript",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "rm -rf build && tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PoziRau/easy-jwt-ts.git"
+  },
+  "keywords": [
+    "jwt"
+  ],
+  "author": "PoziRau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PoziRau/easy-jwt-ts/issues"
+  },
+  "homepage": "https://github.com/PoziRau/easy-jwt-ts#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.10",
+    "typescript": "^4.5.5"
+  }
+}
